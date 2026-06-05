@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int n, i, largest = 0;
+    
+    printf("Enter a number: ");
+    scanf("%d", &n);
+    
+    // Check factors from 2 up to n
+    for (i = 2; i <= n; i++) {
+        // Check if i divides n
+        if (n % i == 0) {
+            // Check if i is prime
+            int isPrime = 1;
+            for (int j = 2; j*j <= i; j++) {
+                if (i % j == 0) {
+                    isPrime = 0;
+                    break;
+                }
+            }
+            if (isPrime) {
+                largest = i;  // update largest prime factor
+            }
+        }
+    }
+    
+    printf("Largest prime factor of %d is %d\n", n, largest);
+    
+    return 0;
+}
