@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int arr[] = {1, 2, 3, 2, 4, 5, 3, 6, 2};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Duplicate elements: ");
+
+    for (int i = 0; i < n; i++) {
+        int isDuplicate = 0;
+
+        // Check if arr[i] has already been processed
+        for (int k = 0; k < i; k++) {
+            if (arr[i] == arr[k]) {
+                isDuplicate = 1;
+                break;
+            }
+        }
+
+        if (isDuplicate)
+            continue;
+
+        int count = 1;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[i] == arr[j]) {
+                count++;
+            }
+        }
+
+        if (count > 1) {
+            printf("%d ", arr[i]);
+        }
+    }
+
+    return 0;
+}
