@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int isPalindrome(char str[]) {
+    int left = 0;
+    int right = strlen(str) - 1;
+
+    while (left < right) {
+        // skip spaces
+        while (left < right && str[left] == ' ')
+            left++;
+
+        while (left < right && str[right] == ' ')
+            right--;
+
+        // compare characters (case-insensitive)
+        if (tolower(str[left]) != tolower(str[right])) {
+            return 0; // not a palindrome
+        }
+
+        left++;
+        right--;
+    }
+
+    return 1; // palindrome
+}
+
+int main() {
+    char str[100];
+
+    printf("Enter a string: ");
+    fgets(str, sizeof(str), stdin);
+
+    // remove newline character if present
+    str[strcspn(str, "\n")] = '\0';
+
+    if (isPalindrome(str)) {
+        printf("It is a palindrome\n");
+    } else {
+        printf("It is not a palindrome\n");
+    }
+
+    return 0;
+}
