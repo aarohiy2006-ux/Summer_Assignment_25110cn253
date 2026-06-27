@@ -1,0 +1,100 @@
+#include <stdio.h>
+
+#define TOTAL_SEATS 10
+
+int seats[TOTAL_SEATS] = {0};
+
+void showSeats() {
+    int i;
+    printf("\nSeat Status:\n");
+    for (i = 0; i < TOTAL_SEATS; i++) {
+        if (seats[i] == 0)
+            printf("Seat %d : Available\n", i + 1);
+        else
+            printf("Seat %d : Booked\n", i + 1);
+    }
+}
+
+void bookTicket() {
+    int seatNo;
+
+    printf("Enter seat number to book (1-%d): ", TOTAL_SEATS);
+    scanf("%d", &seatNo);
+
+    if (seatNo < 1 || seatNo > TOTAL_SEATS) {
+        printf("Invalid seat number!\n");
+    } else if (seats[seatNo - 1] == 1) {
+        printf("Seat already booked!\n");
+    } else {
+        seats[seatNo - 1] = 1;
+        printf("Ticket booked successfully for Seat %d.\n", seatNo);
+    }
+}
+
+void cancelTicket() {
+    int seatNo;
+
+    printf("Enter seat number to cancel (1-%d): ", TOTAL_SEATS);
+    scanf("%d", &seatNo);
+
+    if (seatNo < 1 || seatNo > TOTAL_SEATS) {
+        printf("Invalid seat number!\n");
+    } else if (seats[seatNo - 1] == 0) {
+        printf("Seat is not booked.\n");
+    } else {
+        seats[seatNo - 1] = 0;
+        printf("Ticket cancelled successfully for Seat %d.\n", seatNo);
+    }
+}
+
+void bookedSeats() {
+    int i, found = 0;
+
+    printf("\nBooked Seats:\n");
+    for (i = 0; i < TOTAL_SEATS; i++) {
+        if (seats[i] == 1) {
+            printf("Seat %d\n", i + 1);
+            found = 1;
+        }
+    }
+
+    if (!found)
+        printf("No seats are booked.\n");
+}
+
+int main() {
+    int choice;
+
+    while (1) {
+        printf("\n===== Ticket Booking System =====\n");
+        printf("1. Show Available Seats\n");
+        printf("2. Book Ticket\n");
+        printf("3. Cancel Ticket\n");
+        printf("4. View Booked Seats\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                showSeats();
+                break;
+            case 2:
+                bookTicket();
+                break;
+            case 3:
+                cancelTicket();
+                break;
+            case 4:
+                bookedSeats();
+                break;
+            case 5:
+                printf("Thank you for using the Ticket Booking System.\n");
+                return 0;
+            default:
+                printf("Invalid choice! Please try again.\n");
+        }
+    }
+
+    return 0;
+}
