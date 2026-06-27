@@ -1,0 +1,184 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+
+struct Salary {
+    int empID;
+    char name[50];
+    float basic, hra, da, deductions, netSalary;
+};
+
+struct Salary emp[MAX];
+int count = 0;
+
+// Function to calculate net salary
+void calculateNetSalary(int i) {
+    emp[i].netSalary = emp[i].basic + emp[i].hra + emp[i].da - emp[i].deductions;
+}
+
+// Add Employee Salary
+void addRecord() {
+    printf("\nEnter Employee ID: ");
+    scanf("%d", &emp[count].empID);
+
+    printf("Enter Employee Name: ");
+    scanf(" %[^\n]", emp[count].name);
+
+    printf("Enter Basic Salary: ");
+    scanf("%f", &emp[count].basic);
+
+    printf("Enter HRA: ");
+    scanf("%f", &emp[count].hra);
+
+    printf("Enter DA: ");
+    scanf("%f", &emp[count].da);
+
+    printf("Enter Deductions: ");
+    scanf("%f", &emp[count].deductions);
+
+    calculateNetSalary(count);
+    count++;
+
+    printf("\nSalary record added successfully!\n");
+}
+
+// Display Records
+void displayRecords() {
+    if (count == 0) {
+        printf("\nNo records found!\n");
+        return;
+    }
+
+    printf("\n========== Salary Records ==========\n");
+
+    for (int i = 0; i < count; i++) {
+        printf("\nEmployee ID : %d\n", emp[i].empID);
+        printf("Name        : %s\n", emp[i].name);
+        printf("Basic       : %.2f\n", emp[i].basic);
+        printf("HRA         : %.2f\n", emp[i].hra);
+        printf("DA          : %.2f\n", emp[i].da);
+        printf("Deductions  : %.2f\n", emp[i].deductions);
+        printf("Net Salary  : %.2f\n", emp[i].netSalary);
+    }
+}
+
+// Search Record
+void searchRecord() {
+    int id, found = 0;
+
+    printf("\nEnter Employee ID to search: ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < count; i++) {
+        if (emp[i].empID == id) {
+            printf("\nEmployee Found\n");
+            printf("Name       : %s\n", emp[i].name);
+            printf("Net Salary : %.2f\n", emp[i].netSalary);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found)
+        printf("Employee not found!\n");
+}
+
+// Update Record
+void updateRecord() {
+    int id, found = 0;
+
+    printf("\nEnter Employee ID to update: ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < count; i++) {
+        if (emp[i].empID == id) {
+            printf("Enter New Basic Salary: ");
+            scanf("%f", &emp[i].basic);
+
+            printf("Enter New HRA: ");
+            scanf("%f", &emp[i].hra);
+
+            printf("Enter New DA: ");
+            scanf("%f", &emp[i].da);
+
+            printf("Enter New Deductions: ");
+            scanf("%f", &emp[i].deductions);
+
+            calculateNetSalary(i);
+
+            printf("\nRecord updated successfully!\n");
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found)
+        printf("Employee not found!\n");
+}
+
+// Delete Record
+void deleteRecord() {
+    int id, found = 0;
+
+    printf("\nEnter Employee ID to delete: ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < count; i++) {
+        if (emp[i].empID == id) {
+            for (int j = i; j < count - 1; j++) {
+                emp[j] = emp[j + 1];
+            }
+            count--;
+            found = 1;
+            printf("\nRecord deleted successfully!\n");
+            break;
+        }
+    }
+
+    if (!found)
+        printf("Employee not found!\n");
+}
+
+int main() {
+    int choice;
+
+    do {
+        printf("\n====== Salary Management System ======\n");
+        printf("1. Add Salary Record\n");
+        printf("2. Display All Records\n");
+        printf("3. Search Record\n");
+        printf("4. Update Record\n");
+        printf("5. Delete Record\n");
+        printf("6. Exit\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                addRecord();
+                break;
+            case 2:
+                displayRecords();
+                break;
+            case 3:
+                searchRecord();
+                break;
+            case 4:
+                updateRecord();
+                break;
+            case 5:
+                deleteRecord();
+                break;
+            case 6:
+                printf("\nExiting Salary Management System...\n");
+                break;
+            default:
+                printf("\nInvalid choice! Please try again.\n");
+        }
+
+    } while (choice != 6);
+
+    return 0;
+}
